@@ -4,19 +4,36 @@
 #include <fcntl.h>
 #include "get_next_line.h"
 
+
 char *get_next_line(int fd)
 {
-	int bytes_read ;
+	static int i = 0;
+	int j;
+	int bytes_read;
+	char *line;
 	char *buffer;
-	int i;
+	char *stock;
 
-		buffer = malloc(BUFF_SIZE + 1 *sizeof (char));
+	while (stock[i] != '\n')
+	{
+	buffer = malloc(BUFF_SIZE + 1 *sizeof (char));
 		if (!buffer)
+			return (NULL);
+	stock = malloc(BUFF_SIZE + 1 *sizeof (char));
+		if (!stock)
 			return (NULL);
 		bytes_read = read(fd, buffer, BUFF_SIZE);
 		if (bytes_read <= 0)
 			return (free (buffer), NULL);
-	return (buffer);
+		j = 0;
+	 	while (j < BUFF_SIZE)
+		{
+			stock[i] = buffer[j];
+			i++;
+			j++;
+		}
+	}
+	return (line);
 }
 
 int main(void)
@@ -44,62 +61,10 @@ int main(void)
 	close(fd);
 	return (0);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-char *stock_buffer(buffer)
-{
-	static int i = 0;
-	int j;
-	char *line;
-
-	j = 0;
-	while (stock[i] != '\n')
-	{
-	buffer = malloc(BUFF_SIZE + 1 *sizeof (char));
-		if (!buffer)
-			return (NULL);
-		bytes_read = read(fd, buffer, BUFF_SIZE);
-		if (bytes_read <= 0)
-			return (free (buffer), NULL);
-	 	while (j != BUFF_SIZE)
-		{
-			stock[i] = buffer[j];
-			i++;
-			j++;
-		}
-	}
 	//metre toute les read dans stock (il faut le malloc aussi,
 	//une fois avoir fini le fichier, parcourire stock, 
 	// et a chaque /n dans stock metre tout ce quil y avais avant
 	// dans ligne et return ligne puis vider ligne.
 	// et voila 
-	return (line);
-}
 
-
-
-
-
-get_next_line(int fd)
-{
-
-	stock_buffer(buffer);
-
-	return (stock);
-}
 
