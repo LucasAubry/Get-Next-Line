@@ -1,67 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: laubry <laubry@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/22 14:23:06 by laubry            #+#    #+#             */
+/*   Updated: 2023/11/22 16:23:47 by laubry           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
+#include "get_next_line.h"
 
-#define BUFF_SIZE 3
-
-char *stock_buffer(int fd) 
+int	ft_strlen_char(char *src, char c)
 {
-    static char buffer[BUFF_SIZE];
-    static int i = 0;
-    int j;
-    int bytes_read;
-	char *line;
+	int	i;
 
-	j = 0;
-   // while (1)
-	//{
-        if (i == 0) 
-		{
-            bytes_read = read(fd, buffer, BUFF_SIZE);
-            if (bytes_read <= 0)
-                return NULL;
-        }
-
-        while (i < bytes_read && buffer[i] != '\n')
-            i++;
-
-        line = malloc(i + 1);
-        if (!line) 
-            return (NULL);
-
-        j = 0; 
-		while (j < i) 
-		{
-			line[j] = buffer[j];
-			j++;
-        }
-
-        line[i] = '\0';
-
-        i = 0;
-        return buffer;
-  //}
+	i = 0;
+	if (src == NULL)
+		return (0);
+	while (src[i] != '\0' && src[i] != c)
+		i++;
+	return (i);
 }
 
-int main()
+char	*ft_strjoin_and_free_s1_2(char *s1, char *dest)
 {
-    int fd = open("example.txt", O_RDONLY);
-    if (fd == -1) {
-        perror("Erreur lors de l'ouverture du fichier");
-        return 1;
-    }
-
-    char *line;
-
-    while ((line = stock_buffer(fd)) != NULL) 
+	if (dest == NULL)
+		return (NULL);
+	if (s1 != NULL)
+		free(s1);
+	if (dest[0] == '\0')
 	{
-        printf("%s\n", line);
-        free(line);
-    }
-
-    close(fd);
-
-    return 0;
+		free(dest);
+		return (NULL);
+	}
+	return (dest);
 }
