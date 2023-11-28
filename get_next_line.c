@@ -6,7 +6,7 @@
 /*   By: Laubry <aubrylucas.pro@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 14:04:41 by laubry            #+#    #+#             */
-/*   Updated: 2023/11/28 16:21:52 by Laubry           ###   ########.fr       */
+/*   Updated: 2023/11/29 00:22:44 by Laubry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,9 @@ char	*get_next_line(int fd)
 	while (bytes_read > 0 && ft_chr_line(buffer) == 1)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_read <= 0)
+		if (bytes_read < 0)
+			return (NULL);
+		if (bytes_read == 0)
 			return (dest);
 		buffer[bytes_read] = '\0';
 		dest = ft_strjoin_and_free_s1(dest, buffer);
@@ -107,5 +109,19 @@ et le contenu du tampon est ajouté à dest en utilisant
  ft_strjoin_and_free_s1.*/
 
 
- si c -1 return null et free tout
+/* si c -1 return null et free tout
  si c 0 return dest
+
+if (bytes_read < 0)
+		{
+			free(dest);
+			return (-1);
+		}
+		if (bytes_read == 0)
+		{
+			free(dest);
+			dest = NULL;
+			return (0)
+		}
+
+*/
