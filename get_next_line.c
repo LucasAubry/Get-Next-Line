@@ -3,20 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laubry <laubry@student.42.fr>              +#+  +:+       +#+        */
+/*   By: Laubry <aubrylucas.pro@gmail.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 14:04:41 by laubry            #+#    #+#             */
-/*   Updated: 2023/11/22 15:57:21 by laubry           ###   ########.fr       */
+/*   Updated: 2023/11/28 16:21:52 by Laubry           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
 #include "get_next_line.h"
 
 char	*ft_strjoin_and_free_s1(char *s1, char *buffer)
@@ -27,7 +20,8 @@ char	*ft_strjoin_and_free_s1(char *s1, char *buffer)
 
 	i = 0;
 	j = 0;
-	dest = malloc(sizeof(char) * (ft_strlen_char(s1, '\n') + ft_strlen_char(buffer, '\n') + 1));
+	dest = malloc(sizeof(char) * (ft_strlen_char(s1, '\n')
+				+ ft_strlen_char(buffer, '\n') + 2));
 	if (dest != NULL)
 	{
 		while (s1 && s1[i] != '\0')
@@ -41,8 +35,7 @@ char	*ft_strjoin_and_free_s1(char *s1, char *buffer)
 			j++;
 		}
 		dest[i + j] = '\n';
-		if (buffer[j] == '\n')
-			j++;
+		j += (buffer[j] == '\n');
 		dest[i + j] = '\0';
 	}
 	return (ft_strjoin_and_free_s1_2(s1, dest));
@@ -107,24 +100,12 @@ char	*get_next_line(int fd)
 	}
 	return (dest);
 }
-int main() {
-	int fd = open("exemple.txt", O_RDONLY);
-    char *ligne;
-	int b;
-	
-	ligne = get_next_line(fd);
-	printf("LigneLue: %s\n", ligne);
-	free(ligne);
-
-    // Appeler get_next_line jusqu'à ce que la fin du fichier soit atteinte
-    // while ((ligne = get_next_line(fd)) != NULL) {
-    //     printf("Ligne lue : %s\n", ligne);
-    //     free(ligne);  // Libérer la mémoire allouée dynamiquement
-    // }
-
-    close(fd);
-
-    return 0;
-}
+/*a fonction ft_chr_line indique qu'il n'y a pas de ligne complète 
+dans le tampon, la fonction ft_cut_buff est appelée pour 
+supprimer la partie de la ligne présente dans le tampon, 
+et le contenu du tampon est ajouté à dest en utilisant
+ ft_strjoin_and_free_s1.*/
 
 
+ si c -1 return null et free tout
+ si c 0 return dest
